@@ -4,7 +4,33 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+const div = document.querySelector('#modal');
+div.className = 'hidden';
 
+const likeSpans = document.querySelectorAll('.like-glyph');
+
+for (let i of likeSpans) {
+  i.addEventListener('click', () => {
+    mimicServerCall()
+    .then( res => {
+      if (i.className == 'activated-heart') {
+        i.className = 'ayy lmao'
+        i.textContent = EMPTY_HEART
+      } else {
+        i.textContent = FULL_HEART;
+        i.className = 'activated-heart';
+      }  
+    })
+    .catch(err => {
+      div.className = 'ayy lmao'
+      const p = document.querySelector('#modal-message')
+      p.textContent = err
+      setTimeout(() => {
+        div.className = 'hidden'
+      }, 5000)
+    })
+  })
+}
 
 
 //------------------------------------------------------------------------------
